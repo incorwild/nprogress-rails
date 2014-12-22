@@ -5,6 +5,10 @@ $nprogress-zindex: 100 !default;
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -9em;
 }
 
 #nprogress .bar {
@@ -35,27 +39,39 @@ $nprogress-zindex: 100 !default;
 }
 
 /* Remove these to get rid of the spinner */
-#nprogress .spinner {
-  display: block;
-  position: fixed;
+#nprogress .spinner,
+#nprogress .spinner:before,
+#nprogress .spinner:after {
+  background: $nprogress-color;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
   z-index: $nprogress-zindex;
-  top: 15px;
-  right: 15px;
+  width: 1em;
+  height: 4em;
+}
+#nprogress .spinner:before,
+#nprogress .spinner:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+#nprogress .spinner:before {
+  left: -1.5em;
+}
+#nprogress .spinner {
+  text-indent: -9999em;
+  margin: 8em auto;
+  position: relative;
+  font-size: 11px;
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+#nprogress .spinner:after {
+  left: 1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
 }
 
-#nprogress .spinner-icon {
-  width: 18px;
-  height: 18px;
-  box-sizing: border-box;
-
-  border: solid 2px transparent;
-  border-top-color: $nprogress-color;
-  border-left-color: $nprogress-color;
-  border-radius: 50%;
-
-  -webkit-animation: nprogress-spinner 400ms linear infinite;
-          animation: nprogress-spinner 400ms linear infinite;
-}
 
 .nprogress-custom-parent {
   overflow: hidden;
@@ -67,11 +83,27 @@ $nprogress-zindex: 100 !default;
   position: absolute;
 }
 
-@-webkit-keyframes nprogress-spinner {
-  0%   { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0 $nprogress-color;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em $nprogress-color;
+    height: 5em;
+  }
 }
-@keyframes nprogress-spinner {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0 $nprogress-color;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em $nprogress-color;
+    height: 5em;
+  }
 }
